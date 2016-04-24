@@ -1,0 +1,366 @@
+name: "WWW_Net"
+input: "rgb_data"
+input: "motion_data"
+input_dim: 1
+input_dim: 3
+input_dim: 360
+input_dim: 640
+input_dim: 1
+input_dim: 3
+input_dim: 360
+input_dim: 640
+layer {
+  name: "conv1_rgb"
+  type: "Convolution"
+  bottom: "rgb_data"
+  top: "conv1_rgb"
+  convolution_param {
+    num_output: 96
+    kernel_size: 7
+    stride: 2
+  }
+}
+layer {
+  name: "relu1_rgb"
+  type: "ReLU"
+  bottom: "conv1_rgb"
+  top: "conv1_rgb"
+}
+layer {
+  name: "pool1_rgb"
+  type: "Pooling"
+  bottom: "conv1_rgb"
+  top: "pool1_rgb"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layer {
+  name: "norm1_rgb"
+  type: "LRN"
+  bottom: "pool1_rgb"
+  top: "norm1_rgb"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+layer {
+  name: "conv2_rgb"
+  type: "Convolution"
+  bottom: "norm1_rgb"
+  top: "conv2_rgb"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 5
+    stride: 2
+  }
+}
+layer {
+  name: "relu2_rgb"
+  type: "ReLU"
+  bottom: "conv2_rgb"
+  top: "conv2_rgb"
+}
+layer {
+  name: "pool2_rgb"
+  type: "Pooling"
+  bottom: "conv2_rgb"
+  top: "pool2_rgb"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layer {
+  name: "norm2_rgb"
+  type: "LRN"
+  bottom: "pool2_rgb"
+  top: "norm2_rgb"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+layer {
+  name: "conv3_rgb"
+  type: "Convolution"
+  bottom: "norm2_rgb"
+  top: "conv3_rgb"
+  convolution_param {
+    num_output: 384
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_rgb"
+  type: "ReLU"
+  bottom: "conv3_rgb"
+  top: "conv3_rgb"
+}
+layer {
+  name: "conv4_rgb"
+  type: "Convolution"
+  bottom: "conv3_rgb"
+  top: "conv4_rgb"
+  convolution_param {
+    num_output: 384
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_rgb"
+  type: "ReLU"
+  bottom: "conv4_rgb"
+  top: "conv4_rgb"
+}
+layer {
+  name: "conv5_rgb"
+  type: "Convolution"
+  bottom: "conv4_rgb"
+  top: "conv5_rgb"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_rgb"
+  type: "ReLU"
+  bottom: "conv5_rgb"
+  top: "conv5_rgb"
+}
+layer {
+  name: "pool5_rgb"
+  type: "Pooling"
+  bottom: "conv5_rgb"
+  top: "pool5_rgb"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layer {
+  name: "fc6_rgb"
+  type: "InnerProduct"
+  bottom: "pool5_rgb"
+  top: "fc6_rgb"
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relur6_rgb"
+  type: "ReLU"
+  bottom: "fc6_rgb"
+  top: "fc6_rgb"
+}
+layer {
+  name: "drop6_rgb"
+  type: "Dropout"
+  bottom: "fc6_rgb"
+  top: "fc6_rgb"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "conv1_motion"
+  type: "Convolution"
+  bottom: "motion_data"
+  top: "conv1_motion"
+  convolution_param {
+    num_output: 96
+    kernel_size: 7
+    stride: 2
+  }
+}
+layer {
+  name: "relu1_motion"
+  type: "ReLU"
+  bottom: "conv1_motion"
+  top: "conv1_motion"
+}
+layer {
+  name: "pool1_motion"
+  type: "Pooling"
+  bottom: "conv1_motion"
+  top: "pool1_motion"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layer {
+  name: "norm1_motion"
+  type: "LRN"
+  bottom: "pool1_motion"
+  top: "norm1_motion"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+layer {
+  name: "conv2_motion"
+  type: "Convolution"
+  bottom: "norm1_motion"
+  top: "conv2_motion"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 5
+    stride: 2
+  }
+}
+layer {
+  name: "relu2_motion"
+  type: "ReLU"
+  bottom: "conv2_motion"
+  top: "conv2_motion"
+}
+layer {
+  name: "pool2_motion"
+  type: "Pooling"
+  bottom: "conv2_motion"
+  top: "pool2_motion"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layer {
+  name: "norm2_motion"
+  type: "LRN"
+  bottom: "pool2_motion"
+  top: "norm2_motion"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+layer {
+  name: "conv3_motion"
+  type: "Convolution"
+  bottom: "norm2_motion"
+  top: "conv3_motion"
+  convolution_param {
+    num_output: 384
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_motion"
+  type: "ReLU"
+  bottom: "conv3_motion"
+  top: "conv3_motion"
+}
+layer {
+  name: "conv4_motion"
+  type: "Convolution"
+  bottom: "conv3_motion"
+  top: "conv4_motion"
+  convolution_param {
+    num_output: 384
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_motion"
+  type: "ReLU"
+  bottom: "conv4_motion"
+  top: "conv4_motion"
+}
+layer {
+  name: "conv5_motion"
+  type: "Convolution"
+  bottom: "conv4_motion"
+  top: "conv5_motion"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_motion"
+  type: "ReLU"
+  bottom: "conv5_motion"
+  top: "conv5_motion"
+}
+layer {
+  name: "pool5_motion"
+  type: "Pooling"
+  bottom: "conv5_motion"
+  top: "pool5_motion"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layer {
+  name: "fc6_motion"
+  type: "InnerProduct"
+  bottom: "pool5_motion"
+  top: "fc6_motion"
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relu6_motion"
+  type: "ReLU"
+  bottom: "fc6_motion"
+  top: "fc6_motion"
+}
+layer {
+  name: "drop6_motion"
+  type: "Dropout"
+  bottom: "fc6_motion"
+  top: "fc6_motion"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_combine"
+  type: "Concat"
+  bottom: "fc6_rgb"
+  bottom: "fc6_motion"
+  top: "fc7_combine"
+  concat_param {
+    concat_dim: 1
+  }
+}
+layer {
+  name: "fc8"
+  type: "InnerProduct"
+  bottom: "fc7_combine"
+  top: "fc8"
+  inner_product_param {
+    num_output: 94
+  }
+}
+layer {
+  name: "probs"
+  type: "Sigmoid"
+  bottom: "fc8"
+  top: "probs"
+}
